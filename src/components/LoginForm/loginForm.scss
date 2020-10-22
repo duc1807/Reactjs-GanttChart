@@ -1,0 +1,51 @@
+
+input {
+    height: 8vh;
+    border-radius: 6px;
+    background-color: whitesmoke;
+    padding: 0.5vh 1vw 0.5vh 1vw;
+    outline-style: none;
+    border: none;
+    font-size: 0.9vw;
+    transition: 0.3s;
+    margin-left: 2vw;
+  }
+  input:focus {
+    outline-style: none;
+    background-color: #c1aad6;
+  }
+  label {
+    font-size: 1vw;
+    color: whitesmoke;
+    font-weight: bold;
+  }
+  
+  #loginForm {
+    height: 30vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-around;
+  }
+  #loginBtn {
+    width: 7vw;
+    height: 6vh;
+    margin: 1vw 2vw 1vw 2vw;
+    outline-style: none;
+    border: none;
+    color: whitesmoke;
+    border-radius: 9px;
+    font-weight: bold;
+    font-size: 0.8vw;
+    border-radius: 9px;
+    background: linear-gradient(145deg, #64378f, #542e79);
+    box-shadow: 8px 8px 16px #492869, -8px -8px 16px #713ea3;
+    &:hover {
+      cursor: pointer;
+      border-radius: 9px;
+      border-radius: 9px;
+      background: linear-gradient(145deg, #64378f, #542e79);
+      box-shadow: inset 8px 8px 16px #492869, inset -8px -8px 16px #713ea3;
+    }
+  }
+  

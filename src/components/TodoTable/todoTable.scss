@@ -1,0 +1,83 @@
+.table-monthName {
+  background-color: #67498f;
+  border-right: 1px solid rgb(228, 228, 228);
+  border-left: 2px solid rgb(228, 228, 228);
+  border-radius: 2px;
+  color: whitesmoke;
+}
+
+#table {
+  border-collapse: separate;
+  border-spacing: 0 1vw;
+}
+
+#table tr {
+  border-top: 1px solid black;
+}
+
+.nonFixedTd {
+  height: 2.75vw;
+  width: 1vw;
+  padding: 0;
+}
+
+.fixedTd {
+  position: fixed;
+  background-color: #30332e;
+  height: 5.4vh;
+  width: 20vw;
+  text-align: start;
+  /* border: 1px solid; */
+  margin-left: -21.5vw;
+  cursor: pointer;
+  transition: 0.3s;
+  pointer-events: "none";
+  border: "none";
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  padding: 0 0 0 0;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  font-size: 0.9vw;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  background: linear-gradient(145deg, #64378f, #542e79);
+  box-shadow: 8px 8px 16px #492869, -8px -8px 16px #713ea3;
+}
+.startCell {
+  border-left: 2px solid rgb(231, 231, 231);
+}
+
+#taskContainer {
+  flex: 0.8;
+  height: 5.4vh;
+  display: flex;
+  align-items: center;
+  padding-left: 2vw;
+  transition: 0.3s;
+  border-radius: 6px;
+}
+
+#taskContainer:hover {
+  background-color: #501a69;
+}
+
+#delBtnContainer {
+  background-color: rgb(122, 46, 46);
+  flex: 0.2;
+  height: 5.4vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+  font-weight: 600;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+#delBtnContainer:hover {
+  background-color: rgb(110, 26, 26);
+}

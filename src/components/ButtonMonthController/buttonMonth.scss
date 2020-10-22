@@ -1,0 +1,28 @@
+.homeBtn {
+  width: 6vw;
+  height: 5vh;
+  margin: 1vw 0 1vw 2vw;
+  background-color: rgb(109, 43, 43);
+  outline-style: none;
+  border: none;
+  color: whitesmoke;
+  border-radius: 9px;
+  font-weight: bold;
+  font-size: 0.9vw;
+  border-radius: 9px;
+  background: linear-gradient(145deg, #64378f, #542e79);
+  box-shadow: 8px 8px 16px #492869, -8px -8px 16px #713ea3;
+}
+.homeBtn:hover {
+  cursor: pointer;
+  border-radius: 9px;
+  border-radius: 9px;
+  background: linear-gradient(145deg, #64378f, #542e79);
+  box-shadow: inset 8px 8px 16px #492869, inset -8px -8px 16px #713ea3;
+}
+.monthNum {
+  width: 1.2vw;
+  height: 4vh;
+  font-size: 1vw;
+  text-align: center;
+}

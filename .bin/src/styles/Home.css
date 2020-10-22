@@ -1,0 +1,215 @@
+.App {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  min-height: 48.8vw;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  background-color: #5d3386;
+}
+.inputContainer {
+  padding-top: 2vw;
+  flex: 0.1;
+  min-height: 14vw;
+  width: 100%;
+  background-color: #5d3386;
+  color: whitesmoke;
+  font-weight: 600;
+  font-size: 1.15vw;
+}
+.chartContainer {
+  flex: 0.9;
+  height: fit-content;
+  width: 80%;
+  background-color:  #5d3386;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: flex-start;
+  overflow-x: scroll;
+  align-self: center;
+}
+.dateInput {
+  width: 3vw;
+  text-align: center;
+}
+td {
+  padding: 10px;
+  line-break: auto;
+  font-weight: bold;
+  font-size: 1.1vw;
+}
+/* Test */
+#left {
+  width: 20vw;
+}
+#testTable {
+  width: 20vw;
+}
+#testTable td {
+  width: 20vw;
+}
+.nonFixedTd {
+  height: 2.75vw;
+  width: 1vw;
+  padding: 0;
+}
+.fixedTd {
+  position: fixed;
+  background-color: #30332E;
+  height: 5.4vh;
+  width: 20vw;
+  text-align: start;
+  /* border: 1px solid; */
+  margin-left: -21.5vw;
+  cursor: pointer;
+  transition: 0.3s;
+  pointer-events: "none";
+  border: "none";
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  padding: 0 0 0 0;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  font-size: 0.9vw;
+  border-radius: 6px;
+  background: linear-gradient(145deg, #64378f, #542e79);
+  box-shadow: 8px 8px 16px #492869, -8px -8px 16px #713ea3;
+}
+.testT {
+  margin-left: 20vw;
+}
+button {
+  width: 6vw;
+  height: 5vh;
+  margin: 1vw 2vw 1vw 2vw;
+  background-color: rgb(109, 43, 43);
+  outline-style: none;
+  border: none;
+  color: whitesmoke;
+  border-radius: 9px;
+  font-weight: bold;
+  font-size: 0.8vw;
+  border-radius: 9px;
+  background: linear-gradient(145deg, #64378f, #542e79);
+  box-shadow: 8px 8px 16px #492869, -8px -8px 16px #713ea3;
+}
+button:hover {
+  cursor: pointer;
+  border-radius: 9px;
+  border-radius: 9px;
+  background: linear-gradient(145deg, #64378f, #542e79);
+  box-shadow: inset 8px 8px 16px #492869, inset -8px -8px 16px #713ea3;
+}
+
+input {
+  height: 2vw;
+  width: 20vw;
+  font-size: 1vw;
+}
+
+input:focus {
+  outline-style: none;
+}
+
+#table {
+  border-collapse: separate;
+  border-spacing: 0 1vw;
+}
+
+#table tr {
+  border-top: 1px solid black;
+}
+
+#taskContainer {
+  flex: 0.8;
+  height: 5.4vh;
+  display: flex;
+  align-items: center;
+  padding-left: 2vw;
+  transition: 0.3s;
+  border-radius: 6px;
+}
+
+#taskContainer:hover {
+  background-color: #5d2477;
+}
+#delBtnContainer {
+  background-color: #b31227;
+  flex: 0.2;
+  height: 5.4vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+  font-weight: 600;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+#delBtnContainer:hover {
+  background-color: rgb(144, 3, 3);
+}
+#logoutBtn {
+  position: absolute;
+  width: 8vw;
+  height: 5vh;
+  right: 5vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.2s;
+  color: white;
+  font-weight: 600;
+  font-size: 1vw;
+  border-radius: 9px;
+  /* background: linear-gradient(145deg, #64378f, #542e79); */
+  background-color: rgb(165, 67, 67);
+  box-shadow: 7px 7px 14px #492869, -7px -7px 14px #713ea3;
+}
+#logoutBtn:hover {
+  background-color: rgb(165, 67, 67);
+  box-shadow: inset 7px 7px 14px  rgb(128, 42, 42), inset -7px -7px 14px  rgb(165, 67, 67);
+}
+
+#showAllBtn:hover {
+  background-color:  #7757a0;
+}
+
+#showAllBtn {
+  background-color:  #61418b;
+}
+
+#logoutBtn a {
+  text-decoration: none;
+  color: whitesmoke;
+}
+.taskTd {
+  --c: #57A773;
+  background-color: var(--c);
+  /* background-color: rgb(34, 117, 54); */
+}
+.taskTd:hover > .taskTd {
+  --c: blue;
+}
+#userProfile {
+  position: absolute;
+  color: whitesmoke;
+  font-size: 0.9vw;
+  left: 2vw;
+}
+.table-monthName {
+  background-color: #67498f;
+  border-right: 1px solid rgb(228, 228, 228) ;
+  border-left: 2px solid rgb(228, 228, 228) ;
+  border-radius: 2px;
+  color: whitesmoke;
+
+}

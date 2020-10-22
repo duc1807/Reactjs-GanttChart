@@ -37,4 +37,6 @@
   }
 }
 
-
+.startCell {
+  border-left: 2px solid rgb(231, 231, 231);
+}

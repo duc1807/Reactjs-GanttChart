@@ -1,0 +1,29 @@
+.dateInput {
+    width: 2vw;
+    height: 3vh;
+    margin-right: 2vw;
+    text-align: center;
+  }
+  .homeBtn:hover {
+    cursor: pointer;
+    border-radius: 9px;
+    border-radius: 9px;
+    background: linear-gradient(145deg, #64378f, #542e79);
+    box-shadow: inset 8px 8px 16px #492869, inset -8px -8px 16px #713ea3;
+  }
+  input {
+  border-radius: 5px;
+  width: 25vw;
+  height: 5vh;
+  background-color: whitesmoke;
+  padding: 0.5vh 1vw 0.5vh 1vw;
+  outline-style: none;
+  border: none;
+  font-size: 0.9vw;
+  transition: 0.3s;
+  margin-left: 2vw;
+}
+input:focus {
+  outline-style: none;
+  background-color: #c1aad6;
+}

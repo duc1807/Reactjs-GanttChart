@@ -1,10 +1,7 @@
-//@ts-ignore
 import React from "react";
 import "./App.css";
-//@ts-ignore
-import LoginScr from "./containers/loginScr.js";
-//@ts-ignore
-import HomeScr from "./containers/homeScr.js";
+import LoginScr from "./pages/loginScr";
+import HomeScr from "./pages/homeScr";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
@@ -12,7 +9,7 @@ function App() {
     <Router>
       <Switch>
         <Route path="/" exact component={LoginScr} />
-        <Route path="/gantt-chart/:currentUser" exact component={HomeScr} />
+        <Route path="/home/:currentUser" component={HomeScr} />
       </Switch>
     </Router>
   );

@@ -1,0 +1,16 @@
+.startCell {
+  border-left: 2px solid rgb(231, 231, 231);
+}
+.nonFixedTd {
+  height: 2.75vw;
+  width: 1vw;
+  padding: 0;
+}
+.taskTd {
+  --c: #57a773;
+  background-color: var(--c);
+  /* background-color: rgb(34, 117, 54); */
+}
+//   .taskTd:hover > .taskTd {
+//     --c: blue;
+//   }
