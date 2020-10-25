@@ -29,6 +29,7 @@ const LoginScr = () => {
 
   return (
     <div className="container">
+      <h1 id="titleText">Manage tasks with the gantt chart</h1>
       <form autoComplete="off" id="loginForm" onSubmit={handleLogin}>
         <span>
           <label for="username">Username: </label>

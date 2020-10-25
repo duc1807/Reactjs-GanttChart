@@ -41,6 +41,15 @@ const LoginScr = () => {
 
   return (
     <div className="container">
+      <span id="titleText">Manage tasks with Gantt Chart</span>
+      <div id="imageContainer">
+        <img
+          id="descriptionImage"
+          alt="Gantt Chart"
+          src="https://cdn.dribbble.com/users/704067/screenshots/2660479/gantt-animation.gif"
+        ></img>
+        <p># New way to visualize tasks</p>
+      </div>
       {/* <form autoComplete="off" id="loginForm" onSubmit={handleLogin}>
         <span>
           <label for="username">Username: </label>

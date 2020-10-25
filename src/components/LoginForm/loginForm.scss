@@ -1,51 +1,67 @@
-
-input {
-    height: 8vh;
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;900&display=swap');
+* {
+  font-family: 'Nunito', serif;
+  font-weight: 400;
+}
+#input {
+    height: 7.5vh;
     border-radius: 6px;
-    background-color: whitesmoke;
+    background-color: rgb(207, 230, 235);
     padding: 0.5vh 1vw 0.5vh 1vw;
     outline-style: none;
     border: none;
-    font-size: 0.9vw;
+    font-size: 1.4vw;
     transition: 0.3s;
     margin-left: 2vw;
   }
-  input:focus {
+  #input:focus {
     outline-style: none;
-    background-color: #c1aad6;
+    background-color: #d9badf;
   }
   label {
-    font-size: 1vw;
-    color: whitesmoke;
+    font-size: 1.5vw;
+    color: rgb(207, 230, 235);
     font-weight: bold;
   }
   
   #loginForm {
-    height: 30vh;
+    height: 40vh;
+    margin-top: 8vh;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     justify-content: space-around;
+
   }
   #loginBtn {
-    width: 7vw;
-    height: 6vh;
+    width: 10vw;
+    height: 7.5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 1vw 2vw 1vw 2vw;
     outline-style: none;
     border: none;
-    color: whitesmoke;
+    --b:  rgb(207, 230, 235);
+    color: var(--b);
     border-radius: 9px;
     font-weight: bold;
-    font-size: 0.8vw;
+    --f: 1.2vw;
+    font-size: var(--f);
     border-radius: 9px;
-    background: linear-gradient(145deg, #64378f, #542e79);
-    box-shadow: 8px 8px 16px #492869, -8px -8px 16px #713ea3;
+    transition: 0.3s;
+    background: linear-gradient(145deg, #662672, #6d2b79);
+    box-shadow: 8px 8px 16px #572061, -6px -6px 16px #7a3688;
     &:hover {
       cursor: pointer;
+      --f: 1.3vw;
+      --b: #f6d86b;
+    }
+    &:active {
       border-radius: 9px;
       border-radius: 9px;
-      background: linear-gradient(145deg, #64378f, #542e79);
-      box-shadow: inset 8px 8px 16px #492869, inset -8px -8px 16px #713ea3;
+      background: linear-gradient(145deg, #722f7e, #662672);
+      box-shadow: inset 8px 8px 16px #541f5e, inset -8px -8px 16px #793485;
     }
   }
   
