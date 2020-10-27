@@ -164,7 +164,7 @@ const TodoCard = (props) => {
       ) {
         if (date === 1)
           return <td className="nonFixedTd taskTd startCell"></td>;
-        else return <td className="nonFixedTd taskTd"></td>;
+        else return <td draggable="true" className="nonFixedTd taskTd"></td>;
       } else {
         if (date === 1) return <td className="nonFixedTd startCell"></td>;
         else return <td className="nonFixedTd"></td>;
