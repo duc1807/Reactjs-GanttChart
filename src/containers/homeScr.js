@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
+
 import "../styles/Home.css";
-
+//@ts-ignore
 import TodoTable from "../components/TodoTable/TodoTable";
-import TaskInputForm from '../components/TaskInputForm/TaskInputForm'
-import { useParams } from "react-router-dom";
-import ButtonMonthControl from "../components/ButtonMonthController/ButtonMonth";
-import { FaUserCircle } from 'react-icons/fa'
+//@ts-ignore
+import TaskInputForm from "../components/TaskInputForm/TaskInputForm";
 
+import { useParams } from "react-router-dom";
+//@ts-ignore
+import ButtonMonthControl from "../components/ButtonMonthController/ButtonMonth";
+
+import { FaUserCircle } from "react-icons/fa";
 
 const HomeScr = () => {
   /*================================== Const value initialize =====*/
@@ -14,80 +18,72 @@ const HomeScr = () => {
   // Get username from param
   //@ts-ignore
   const { currentUser } = useParams();
-  // Generate date of each Month
-  const date31 = [];
-  for (let i = 1; i < 32; i++) {
-    date31.push(i);
-  }
-  const date30 = [];
-  for (let i = 1; i < 31; i++) {
-    date30.push(i);
-  }
-  const date29 = [];
-  for (let i = 1; i < 30; i++) {
-    date29.push(i);
-  }
+  currentUser.toString();
+
+  // Function that return an array of dates in specific month
+  const getDaysInMonth = (month, year) => {
+    const totalDate = new Date(year, month, 0).getDate();
+    let dateArray = [];
+    for (let i = 1; i < totalDate + 1; i++) {
+      dateArray.push(i);
+    }
+    return dateArray;
+  };
+
   // Generate the array of months in a year
   const year = [
     {
       month: "jan",
-      date: date31,
+      date: getDaysInMonth(1, 2020),
     },
     {
       month: "feb",
-      date: date29,
+      date: getDaysInMonth(2, 2020),
     },
     {
       month: "mar",
-      date: date31,
+      date: getDaysInMonth(3, 2020),
     },
     {
       month: "apr",
-      date: date30,
+      date: getDaysInMonth(4, 2020),
     },
     {
       month: "may",
-      date: date31,
+      date: getDaysInMonth(5, 2020),
     },
     {
       month: "jun",
-      date: date30,
+      date: getDaysInMonth(6, 2020),
     },
     {
       month: "jul",
-      date: date31,
+      date: getDaysInMonth(7, 2020),
     },
     {
       month: "aug",
-      date: date31,
+      date: getDaysInMonth(8, 2020),
     },
     {
       month: "sep",
-      date: date30,
+      date: getDaysInMonth(9, 2020),
     },
     {
       month: "oct",
-      date: date31,
+      date: getDaysInMonth(10, 2020),
     },
     {
       month: "nov",
-      date: date30,
+      date: getDaysInMonth(11, 2020),
     },
     {
       month: "dec",
-      date: date30,
+      date: getDaysInMonth(12, 2020),
     },
   ];
 
-  // if(!localStorage[currentUser]) {
-  //   localStorage.setItem(currentUser, '')
-  //   localStoredTodo = localStorage.getItem(currentUser)
-  // } else {
-  //   const localStoredTodo = JSON.parse(localStorage.getItem[currentUser]) || [];
-  // }
-
   // Get todos from local storage
-  const localStoredTodo = JSON.parse(localStorage.getItem(currentUser)) || [];
+  const localStoredTodo = JSON.parse(localStorage[currentUser]) || [];
 
   /*==================================  States initialize =====*/
 
@@ -106,6 +102,7 @@ const HomeScr = () => {
     endDate: "",
     endMonth: "",
     endYear: "",
+    duration: 0,
   });
 
   // Storing the todos list into local storage when component finish render
@@ -128,7 +125,7 @@ const HomeScr = () => {
   // Get the offset position of the month that have id = passed id
   const getOffSetLeft = (id) => {
     id = parseInt(id);
-    let myElement = undefined;
+    let myElement = null;
     switch (id) {
       case 1:
         myElement = document.getElementById("jan");
@@ -176,12 +173,29 @@ const HomeScr = () => {
   // On create new todo => push to todo arr
   const handleSubmit = () => {
     const newTodo = state;
-    //@ts-ignore
+    if (parseInt(state.startMonth) === parseInt(state.endMonth)) {
+      newTodo.duration = parseInt(state.endDate) - parseInt(state.startDate);
+    } else {
+      let taskDateDuration = 0;
+      for (
+        let i = parseInt(state.startMonth);
+        i < parseInt(state.endMonth) - 1;
+        i++
+      ) {
+        taskDateDuration += getDaysInMonth(i + 1, 2020).length;
+      }
+      newTodo.duration =
+        getDaysInMonth(parseInt(state.startMonth), 2020).length -
+        parseInt(state.startDate) +
+        parseInt(state.endDate) +
+        taskDateDuration;
+    }
     newTodo.id = new Date().getTime();
-    // todo.push(newTodo);
+
     setTodo((prevTodo) => {
       return [...prevTodo, newTodo];
     });
+
     // Reset the input's states
     setState({
       task: "",
@@ -191,21 +205,21 @@ const HomeScr = () => {
       endDate: "",
       endMonth: "",
       endYear: "",
+      duration: 0,
     });
+    const ganttChart = document.getElementById("ganttChart");
     // Focus user's screen to the lastest created todo
-    document.getElementById("ganttChart").scrollLeft = getOffSetLeft(
-      newTodo.startMonth
-    );
+    ganttChart.scrollLeft = getOffSetLeft(newTodo.startMonth);
   };
 
   // A func to handle the screen offset position | (startMonth) => void
   const handleScreenOffset = (startMonth) => {
+    const ganttChart = document.getElementById("ganttChart");
     if (parseInt(startMonth) === 0)
-      document.getElementById("ganttChart").scrollLeft =
-        document.getElementById("table").scrollLeft - 500;
+      ganttChart.scrollLeft = document.getElementById("table").scrollLeft - 500;
     else {
       const topPos = getOffSetLeft(startMonth);
-      document.getElementById("ganttChart").scrollLeft = topPos;
+      ganttChart.scrollLeft = topPos;
     }
   };
 
@@ -219,32 +233,28 @@ const HomeScr = () => {
   };
 
   const handleDisplayTodo = (item) => {
-    console.log(item.id);
     setFilter(item.id);
   };
 
   // Handle the month display on the screen | (option) => void
   const handleChart = (opt) => {
+    const ganttChart = document.getElementById("ganttChart");
     switch (opt) {
       case "prev":
         if (currentMonth === 1) {
-          document.getElementById("ganttChart").scrollLeft = getOffSetLeft(12);
+          ganttChart.scrollLeft = getOffSetLeft(12);
           setCurrentMonth(12);
         } else {
-          document.getElementById("ganttChart").scrollLeft = getOffSetLeft(
-            currentMonth - 1
-          );
+          ganttChart.scrollLeft = getOffSetLeft(currentMonth - 1);
           setCurrentMonth(currentMonth - 1);
         }
         break;
       case "next":
         if (currentMonth === 12) {
-          document.getElementById("ganttChart").scrollLeft = getOffSetLeft(1);
+          ganttChart.scrollLeft = getOffSetLeft(1);
           setCurrentMonth(1);
         } else {
-          document.getElementById("ganttChart").scrollLeft = getOffSetLeft(
-            currentMonth + 1
-          );
+          ganttChart.scrollLeft = getOffSetLeft(currentMonth + 1);
           setCurrentMonth(currentMonth + 1);
         }
         break;
@@ -257,111 +267,22 @@ const HomeScr = () => {
     <div className="App">
       <div className="inputContainer">
         <div id="infoContainer">
-          <FaUserCircle id="userIcon"/>
-          <p>User: {currentUser}</p>
+          <FaUserCircle id="userIcon" />
+          <p>
+            User: {currentUser}
+          </p>
         </div>
-        <div id="logoutBtn">
-          <a href="/">Logout</a>
-        </div>
+        <a href="/">
+          <div id="logoutBtn">Logout</div>
+        </a>
 
-        <TaskInputForm state={state} handleChange={handleChange} handleSubmit={handleSubmit}></TaskInputForm>
-        {/* <form
-          autoComplete="off"
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSubmit();
-          }}
-        >
-          Task:{" "}
-          <input
-            style={{ padding: "0 1vw 0 1vw" }}
-            placeholder={"Write your task here!"}
-            required
-            onChange={handleChange}
-            type="text"
-            name="task"
-            value={state.task}
-          />
-          <br></br>
-          <br></br>
-          Start date:{" "}
-          <input
-            required
-            onChange={handleChange}
-            placeholder={24}
-            className="dateInput"
-            name="startDate"
-            type="text"
-            value={state.startDate}
-          />{" "}
-          -{" "}
-          <input
-            required
-            onChange={handleChange}
-            placeholder={5}
-            className="dateInput"
-            name="startMonth"
-            type="text"
-            value={state.startMonth}
-          />{" "}
-          -{" "}
-          <input
-            onChange={handleChange}
-            placeholder={2020}
-            className="dateInput"
-            name="startYear"
-            type="text"
-            maxLength={4}
-            value={state.startYear}
-          />
-          <br></br>
-          <br></br>
-          End date:{" "}
-          <input
-            required
-            onChange={handleChange}
-            placeholder={24}
-            className="dateInput"
-            name="endDate"
-            type="text"
-            value={state.endDate}
-          />{" "}
-          -{" "}
-          <input
-            required
-            onChange={handleChange}
-            placeholder={5}
-            className="dateInput"
-            name="endMonth"
-            type="text"
-            value={state.endMonth}
-          />{" "}
-          -{" "}
-          <input
-            onChange={handleChange}
-            placeholder={2020}
-            className="dateInput"
-            name="endYear"
-            type="text"
-            value={state.endYear}
-            maxLength={4}
-          />
-          <br></br> <br></br>
-          <button className="homeBtn" type="submit">
-            Add
-          </button>
-        </form> */}
-
-
+        <TaskInputForm
+          state={state}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+        ></TaskInputForm>
 
         <div id="buttonContainer">
-          {/* <button className="homeBtn" onClick={() => handleChart("prev")}>{"< Prev"}</button>
-          <input
-            disabled
-            style={{ width: "1.8vw", textAlign: "center" }}
-            value={currentMonth}
-          ></input>
-          <button className="homeBtn" onClick={() => handleChart("next")}>{"Next >"}</button> */}
           <ButtonMonthControl
             currentMonth={currentMonth}
             handleChart={handleChart}
@@ -369,57 +290,16 @@ const HomeScr = () => {
         </div>
       </div>
       <div className="chartContainer" id="ganttChart">
-        {/* <div className="leftChartContaner">
-        </div>
-        <div className="rightChartContainer">
-        </div> */}
-        {/* Finest solution */}
-        {/* <table border="1" id="table">
-          <tr>
-            <td></td>
-            <td colSpan="32">Januraey</td>
-          </tr>
-          <tr>
-            <td></td>
-            {arr.map((item) => (
-              <td>{item}</td>
-            ))}
-          </tr>
-          {todo.map((item) => (
-            <TodoCard
-              item={item}
-              arr={arr}
-              index={todo.findIndex((a) => a.id === item.id)}
-            ></TodoCard>
-          ))}
-        </table>
-        <table border="1" id="table">
-          <tr>
-            <td></td>
-            {arr.map((item) => (
-              <td>{item}</td>
-            ))}
-          </tr>
-          {todo.map((item) => (
-            <TodoCard
-              item={item}
-              arr={arr}
-              index={todo.findIndex((a) => a.id === item.id)}
-            ></TodoCard>
-          ))}
-        </table> */}
-        {/* TEST */}
-
         <TodoTable
           year={year}
           todo={todo}
           filter={filter}
-          handleScreenOffset={handleScreenOffset}
+          setTodo={setTodo}
           setFilter={setFilter}
-          handleDisplayTodo={handleDisplayTodo}
           removeTodo={removeTodo}
+          handleDisplayTodo={handleDisplayTodo}
+          handleScreenOffset={handleScreenOffset}
         ></TodoTable>
-        
       </div>
     </div>
   );

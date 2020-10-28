@@ -9,8 +9,18 @@
 .taskTd {
   --c: #57a773;
   background-color: var(--c);
+  padding: 0;
+  height: 100%;
+  width: 100%;
   /* background-color: rgb(34, 117, 54); */
 }
 //   .taskTd:hover > .taskTd {
 //     --c: blue;
 //   }
+.containerTaskTd {
+  background-color: #57a773 !important;
+  /* background-color: rgb(34, 117, 54); */
+}
+.startIndex {
+  background-color: red !important;
+}

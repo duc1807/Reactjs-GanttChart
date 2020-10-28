@@ -1,176 +1,225 @@
 import React, { useState } from "react";
-import './todoCard.scss'
+import "./todoCard.scss";
+import uid from "uid";
+import $ from "jquery";
+import "jquery-ui/ui/widgets/draggable";
+import "jquery-ui/ui/widgets/droppable";
 
 const TodoCard = (props) => {
-  const { item, index, data, filter } = props;
-  // const startDate = parseInt(item.startDate);
-  // const endDate = parseInt(item.endDate);
-  // const startMonth = parseInt(item.startMonth);
-  // const endMonth = parseInt(item.endMonth);
+  const { item, index, data, filter, todo, setTodo } = props;
 
   // Parse input date month into type Number
   const newItem = Object.keys(item).map((key) => {
     return parseInt(item[key]);
   });
-  // Destructuring from array
-  const [ , startDate, startMonth, , endDate, endMonth] = [...newItem];
 
-  // Initialize the start position (skip the first 2 rows)
-  const row = parseInt(index) + 2;
+  // Destructuring from parsed INT array
+  const [, startDate, startMonth, , endDate, endMonth] = [...newItem];
 
-  // SetTimeout to await the row to initializing and then hightlight the task position
+  const dragHandler = (e) => {
+    const tableRow = document.getElementsByTagName("tr");
+    if (filter) {
+      tableRow[2].style.opacity = 0.5;
+    } else {
+      tableRow[index + 2].style.opacity = 0.5;
+    }
+  };
 
-  // setTimeout(() => {
-  //   let startPosition = 1;
-  //   let endPosition = 0;
-  //   let totalDatesOfPassedMonths = 0;
+  ///////=========================== Update ca ngay thang khi drop
+  const onDrop = (e) => {
+    const tableRow = document.getElementsByTagName("tr");
+    if (filter) {
+      tableRow[2].style.opacity = 1;
+    } else {
+      tableRow[index + 2].style.opacity = 1;
+    }
+    let newUpdatedTodo = undefined;
+    if (filter) {
+      todo[index].startIndex = parseInt(e.currentTarget.id);
+      todo[index].endIndex =
+        parseInt(e.currentTarget.id) + parseInt(todo[index].duration);
+      newUpdatedTodo = [...todo];
+      setTodo(newUpdatedTodo);
+    } else {
+      newUpdatedTodo = [...todo];
+      newUpdatedTodo[index].startIndex = parseInt(e.currentTarget.id);
+      newUpdatedTodo[index].endIndex =
+        parseInt(newUpdatedTodo[index].startIndex) +
+        parseInt(todo[index].duration);
 
-  //   // Calculate the total dates of passed months during task duration and calculate the endPosition
-  //   let passedMonth = endMonth - startMonth - 1;
-  //   if (startMonth == endMonth) {
-  //     totalDatesOfPassedMonths = 0;
-  //     endPosition = endDate - startDate;
-  //   } else {
-  //     for (let i = 0; i < passedMonth; i++) {
-  //       totalDatesOfPassedMonths += data[startMonth + i].date.length;
-  //     }
-  //     endPosition =
-  //       data[startMonth - 1].date.length -
-  //       startDate +
-  //       endDate +
-  //       totalDatesOfPassedMonths;
-  //   }
+      setTodo(newUpdatedTodo);
+    }
+  };
 
-  //   // [Done]
-  //   // if (endDate < startDate) {
-  //   //   endPosition =
-  //   //     data[startMonth - 1].date.length -
-  //   //     startDate +
-  //   //     endDate +
-  //   //     totalDatesOfPassedMonths;
-  //   // }
-
-  //   // [Not Done]
-  //   // else if (endMonth > startMonth) {
-  //   //   endPosition = 31 - startDate + endDate + (endMonth - startMonth - 1) * 31;
-  //   // }
-
-  //   // [Not Done]
-  //   // else
-  //   //   endPosition =
-  //   //     data[startMonth - 1].date.length -
-  //   //     startDate +
-  //   //     endDate +
-  //   //     totalDatesOfPassedMonths;
-
-  //   // Calculate total of the date of passed months
-  //   for (let t = 1; t < startMonth; t++) {
-  //     startPosition += data[t - 1].date.length;
-  //   }
-
-  //   // // Display the task
-  //   // if (!filter) {
-  //   //   console.log("k co filter");
-  //   //   for (let i = 1; i <= endPosition + 1; i++) {
-  //   //     document.getElementById("table").rows[row].cells[
-  //   //       startPosition - 1 + startDate - 1 + i
-  //   //     ].style.backgroundColor = "green";
-  //   //   }
-  //   //   startPosition = 0;
-  //   //   endPosition = 0;
-  //   // } else {
-  //   //   // Phai reset lai mau truoc khi set mau moi
-  //   //   console.log("co filter");
-  //   //   for (let i = 1; i <= endPosition + 1; i++) {
-  //   //     document.getElementById("table").rows[2].cells[
-  //   //       startPosition - 1 + startDate - 1 + i
-  //   //     ].style.backgroundColor = "green";
-  //   //   }
-  //   //   startPosition = 0;
-  //   //   endPosition = 0;
-  //   // }
-  // }, 800);
+  const allowDrop = (e) => {
+    e.preventDefault();
+  };
 
   let startPosition = 1;
   let endPosition = 0;
-  var totalDatesOfPassedMonths = 0;
+  let taskSkippedMonthByDate = 0;
 
   // Calculate the total dates of passed months during task duration and calculate the endPosition
   let passedMonth = endMonth - startMonth - 1;
 
   if (startMonth === endMonth) {
-    totalDatesOfPassedMonths = 0;
+    taskSkippedMonthByDate = 0;
     endPosition = endDate - startDate;
   } else {
     for (let i = 0; i < passedMonth; i++) {
-      totalDatesOfPassedMonths += data[startMonth + i].date.length;
+      taskSkippedMonthByDate += data[startMonth + i].date.length;
     }
     endPosition =
       data[startMonth - 1].date.length -
       startDate +
       endDate +
-      totalDatesOfPassedMonths;
+      taskSkippedMonthByDate;
   }
   for (let t = 1; t < startMonth; t++) {
     startPosition += data[t - 1].date.length;
   }
 
-  // [Done]
-  if (endDate < startDate) {
-    endPosition =
-      data[startMonth - 1].date.length -
-      startDate +
-      endDate +
-      totalDatesOfPassedMonths;
-  }
-
-  // // [Not Done]
-  // else if (endMonth > startMonth) {
-  //   endPosition = 31 - startDate + endDate + (endMonth - startMonth - 1) * 31;
-  // }
-
-  // [Not Done]
-  else
-    endPosition =
-      data[startMonth - 1].date.length -
-      startDate +
-      endDate +
-      totalDatesOfPassedMonths;
-
-  let indx = 1;
+  // Calculate the finalPosition from the start index of the table row
   let finalEndPosition =
     endPosition +
     startPosition +
     data[startMonth - 1].date.length -
     (data[startMonth - 1].date.length - startDate);
 
-  let totalDateOfUnworkingMonth = 0
+  let totalDateOfUnworkingMonth = 0;
+
   if (endMonth === startMonth) {
     for (let i = 0; i < startMonth - 1; i++) {
-      totalDateOfUnworkingMonth += data[i].date.length
+      totalDateOfUnworkingMonth += data[i].date.length;
     }
     finalEndPosition = totalDateOfUnworkingMonth + endDate + 1;
   }
 
-  return data.map((item) =>
-    item.date.map((date) => {
-      indx++;
-      if (
-        indx >=
-          startPosition +
-            (data[startMonth - 1].date.length -
-              (data[startMonth - 1].date.length - startDate)) &&
-        indx <= finalEndPosition
-      ) {
-        if (date === 1)
-          return <td className="nonFixedTd taskTd startCell"></td>;
-        else return <td draggable="true" className="nonFixedTd taskTd"></td>;
-      } else {
-        if (date === 1) return <td className="nonFixedTd startCell"></td>;
-        else return <td className="nonFixedTd"></td>;
-      }
-    })
-  );
+  // Initialize the start index of the table row
+  let indx = 1;
+  if (!item.startIndex && !item.endIndex) {
+    return data.map((item) =>
+      item.date.map((date) => {
+        indx++;
+        if (
+          indx >=
+            startPosition +
+              (data[startMonth - 1].date.length -
+                (data[startMonth - 1].date.length - startDate)) &&
+          indx <= finalEndPosition
+        ) {
+          if (date === 1)
+            return (
+              <td
+                id={indx}
+                onDragOver={allowDrop}
+                className="nonFixedTd startCell"
+              >
+                <div
+                  id={indx}
+                  draggable="true"
+                  onDrop={onDrop}
+                  onDragOver={allowDrop}
+                  onDragStart={dragHandler}
+                  className="taskTd"
+                ></div>
+              </td>
+            );
+          else
+            return (
+              <td id={indx} onDragOver={allowDrop} className="nonFixedTd">
+                <div
+                  onDragOver={allowDrop}
+                  draggable="true"
+                  onDrop={onDrop}
+                  id={indx}
+                  onDragStart={dragHandler}
+                  className="taskTd"
+                ></div>
+              </td>
+            );
+        } else {
+          if (date === 1)
+            return (
+              <td
+                onDragOver={allowDrop}
+                id={indx}
+                onDrop={onDrop}
+                className="nonFixedTd startCell"
+              ></td>
+            );
+          else
+            return (
+              <td
+                onDragOver={allowDrop}
+                onDrop={onDrop}
+                id={indx}
+                className="nonFixedTd"
+              ></td>
+            );
+        }
+      })
+    );
+  } else {
+    return data.map((month) =>
+      month.date.map((date) => {
+        indx++;
+        if (indx >= item.startIndex && indx <= item.endIndex) {
+          if (date === 1)
+            return (
+              <td id={indx} onDrop={onDrop} className="nonFixedTd startCell">
+                <div
+                  draggable="true"
+                  id={indx}
+                  onDragOver={allowDrop}
+                  onDragStart={dragHandler}
+                  onDrop={onDrop}
+                  className="taskTd"
+                ></div>
+              </td>
+            );
+          else
+            return (
+              <td
+                id={indx}
+                onDrop={onDrop}
+                onDragOver={allowDrop}
+                className="nonFixedTd"
+              >
+                <div
+                  draggable="true"
+                  onDrop={onDrop}
+                  onDragOver={allowDrop}
+                  id={indx}
+                  onDragStart={dragHandler}
+                  className="taskTd"
+                ></div>
+              </td>
+            );
+        } else {
+          if (date === 1)
+            return (
+              <td
+                id={indx}
+                onDragOver={allowDrop}
+                onDrop={onDrop}
+                className="nonFixedTd startCell"
+              ></td>
+            );
+          else {
+            return (
+              <td
+                onDragOver={allowDrop}
+                onDrop={onDrop}
+                id={indx}
+                className="nonFixedTd"
+              ></td>
+            );
+          }
+        }
+      })
+    );
+  }
 };
 
 export default TodoCard;
