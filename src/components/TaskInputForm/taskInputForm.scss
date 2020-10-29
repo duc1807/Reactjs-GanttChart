@@ -1,17 +1,21 @@
 .dateInput {
-    width: 2vw;
-    height: 3vh;
-    margin-right: 2vw;
-    text-align: center;
-  }
-  .homeBtn:hover {
-    cursor: pointer;
-    border-radius: 9px;
+  width: 2vw;
+  height: 3vh;
+  margin-right: 2vw;
+  text-align: center;
+}
+.homeBtn {
+  &:active {
     border-radius: 9px;
     background: linear-gradient(145deg, #64378f, #542e79);
     box-shadow: inset 8px 8px 16px #492869, inset -8px -8px 16px #713ea3;
   }
-  input {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+input {
   border-radius: 5px;
   width: 25vw;
   height: 5vh;
